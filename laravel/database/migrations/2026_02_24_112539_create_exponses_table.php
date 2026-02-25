@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('exponses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('colocation_id')->constrained('colocations')->cascadeOnDelete();
             $table->foreignId('payer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('title');

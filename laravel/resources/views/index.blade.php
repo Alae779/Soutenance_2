@@ -8,7 +8,7 @@
         {{-- Page header --}}
         <div class="page-header">
             <h1 class="page-title">Mes colocations</h1>
-            <a href="" class="btn-primary">+ Créer une colocation</a>
+            <a href="{{ route('create_colocation') }}" class="btn-primary">+ Créer une colocation</a>
         </div>
 
         {{-- Flash messages --}}
@@ -53,25 +53,13 @@
                             </div>
                         </div>
 
-                        @if($coloc->description)
-                            <p class="coloc-description">{{ $coloc->description }}</p>
-                        @endif
+                        
 
-                        <div class="coloc-info">
-                            <span>👑 Owner : <strong>{{ $coloc->owner->name }}</strong></span>
-                            <span>👥 {{ $coloc->activeMembers->count() }} membres</span>
-                            <span>📅 Créée le {{ $coloc->created_at->format('d/m/Y') }}</span>
-                        </div>
-
-                        <div class="coloc-members">
-                            @foreach($coloc->activeMembers as $member)
-                                <span class="member-chip">{{ $member->name }}</span>
-                            @endforeach
-                        </div>
+                        
 
                         <div class="coloc-card-footer">
                             @if($coloc->status !== 'cancelled')
-                                <a href="" class="btn-primary btn-sm">
+                                <a href="{{route('show_colocation',$coloc->id)}}" class="btn-primary btn-sm">
                                     Voir la colocation →
                                 </a>
                             @else
