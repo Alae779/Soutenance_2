@@ -29,7 +29,7 @@ Route::get('/show/{id}', [ColocationController::class, 'show'])->name('show_colo
 Route::post('/store', [ColocationController::class, 'store'])->name('store_colocation');
 //show invitation form
 Route::get('/invite/{colocation}', [InvitationController::class, 'invite'])->name('invite');
-Route::get('/cancel', [ColocationController::class, 'cancel'])->name('cancel');
+Route::post('/cancel/{id}', [ColocationController::class, 'cancel'])->name('cancel');
 Route::get('/leave', [ColocationController::class, 'leave'])->name('leave');
 
 Route::get('/create/category/{colocation}', [CategoryController::class, 'create'])->name('create_category');

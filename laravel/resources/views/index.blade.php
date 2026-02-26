@@ -8,7 +8,12 @@
         {{-- Page header --}}
         <div class="page-header">
             <h1 class="page-title">Mes colocations</h1>
+            
+            @if($hasActiveColocation)
+            <a href="#" style="background-color: grey;" class="btn-primary disabled">+ Créer une colocation</a>
+            @else
             <a href="{{ route('create_colocation') }}" class="btn-primary">+ Créer une colocation</a>
+            @endif
         </div>
 
         {{-- Flash messages --}}

@@ -9,9 +9,10 @@ class SettlementController extends Controller
 {
     public function pay(Request $request, $id){
         $settlement = Settlement::create([
+            "exponse_id" => $request->exponse_id,
             "colocation_id" => $id,
-            "from_user_id" => $request->from_id,
-            "to_user_id" => $request->to_id,
+            "from_user_id" => $request->from_user_id,
+            "to_user_id" => $request->to_user_id,
             "amount" => $request->amount,
         ]);
     }

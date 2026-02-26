@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Settlement extends Model
 {
-    protected $fillable = ['amount', 'colocation_id', 'from_user_id', 'to_user_id'];
+    protected $fillable = ['amount', 'colocation_id', 'from_user_id', 'to_user_id', 'exponse_id'];
     protected $guarded = ['id'];
     public $timestamps = false;
 

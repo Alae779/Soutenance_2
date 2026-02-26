@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExponseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Colocation;
@@ -13,7 +14,7 @@ class ExponseController extends Controller
     public function create(Category $category){
         return view('exponse.create', compact('category'));
     }
-    public function store(Request $request, $id){
+    public function store(StoreExponseRequest $request, $id){
         Exponse::create([
             'title' => $request->title,
             'amount' => $request->amount,

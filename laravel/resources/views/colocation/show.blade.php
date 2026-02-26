@@ -94,6 +94,7 @@
                     @else
                         <ul class="settlement-list">
                             @foreach($debts as $debt)
+                            @if(Auth()->user()->id === $debt['from_id'] || Auth()->user()->id === $debt['to_id'])
                                 <li class="settlement-item">
                                     <span>
                                         <strong>{{ $debt['from'] }}</strong>
@@ -103,12 +104,14 @@
                                     </span>
                                     <form method="POST" action="{{ route('mark_paid', $colocation->id) }}">
                                         @csrf
+                                        <input type="hidden" name="exponse_id" value="{{ $debt['exponse_id'] }}">
                                         <input type="hidden" name="from_user_id" value="{{ $debt['from_id'] }}">
                                         <input type="hidden" name="to_user_id" value="{{ $debt['to_id'] }}">
                                         <input type="hidden" name="amount" value="{{ $debt['amount'] }}">
                                         <button type="submit" class="btn-mark-paid">✓ Marquer payé</button>
                                     </form>
                                 </li>
+                                @endif
                             @endforeach
                         </ul>
                     @endif
