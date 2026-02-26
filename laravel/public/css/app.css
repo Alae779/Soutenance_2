@@ -1625,6 +1625,38 @@ ul { list-style: none; }
     border-top: 1px solid var(--border);
 }
 
+.settlement-list { padding: .25rem 0; }
+
+.settlement-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .85rem 1.25rem;
+    font-size: .875rem;
+    gap: 1rem;
+}
+.settlement-item:not(:last-child) { border-bottom: 1px solid var(--border); }
+
+.settlement-amount {
+    font-weight: 700;
+    color: var(--text);
+    margin-left: .5rem;
+}
+
+.btn-mark-paid {
+    padding: .35rem .75rem;
+    background: var(--green-bg);
+    color: #166534;
+    border: 1px solid var(--green-border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+}
+.btn-mark-paid:hover { background: #166534; color: white; }
+
 /* ============================================
    RESPONSIVE
    ============================================ */

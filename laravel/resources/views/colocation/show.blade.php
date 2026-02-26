@@ -44,8 +44,10 @@
         {{-- Main layout --}}
         <div class="show-layout">
 
-            {{-- LEFT: Members --}}
+            {{-- LEFT: Members + Remboursements --}}
             <aside class="show-sidebar">
+
+                {{-- Members --}}
                 <div class="card">
                     <div class="card-header">
                         <h3>Membres</h3>
@@ -69,8 +71,7 @@
                                     </span>
                                 </div>
                                 @if($isOwner && $member->id !== $colocation->owner_id)
-                                    <form method="POST"
-                                          action="{{ route('colocation.kick', [$colocation, $member]) }}"
+                                    <form method="POST" action=""
                                           onsubmit="return confirm('Retirer ce membre ?')">
                                         @csrf
                                         <button type="submit" class="btn-link danger">Retirer</button>
@@ -80,6 +81,39 @@
                         @endforeach
                     </ul>
                 </div>
+
+                {{-- Remboursements --}}
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Remboursements</h3>
+                    </div>
+                    @if(empty($debts))
+                        <div class="empty-state-sm">
+                            <p>Aucun remboursement nécessaire.</p>
+                        </div>
+                    @else
+                        <ul class="settlement-list">
+                            @foreach($debts as $debt)
+                                <li class="settlement-item">
+                                    <span>
+                                        <strong>{{ $debt['from'] }}</strong>
+                                        →
+                                        <strong>{{ $debt['to'] }}</strong>
+                                        <span class="settlement-amount">{{ number_format($debt['amount'], 2, ',', ' ') }} €</span>
+                                    </span>
+                                    <form method="POST" action="{{ route('mark_paid', $colocation->id) }}">
+                                        @csrf
+                                        <input type="hidden" name="from_user_id" value="{{ $debt['from_id'] }}">
+                                        <input type="hidden" name="to_user_id" value="{{ $debt['to_id'] }}">
+                                        <input type="hidden" name="amount" value="{{ $debt['amount'] }}">
+                                        <button type="submit" class="btn-mark-paid">✓ Marquer payé</button>
+                                    </form>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+
             </aside>
 
             {{-- RIGHT: Categories + Expenses --}}
@@ -111,13 +145,12 @@
                                 <div class="category-header">
                                     <h3 class="category-name">{{ $category->name }}</h3>
                                     <div class="category-actions">
-                                        <a href=""
+                                        <a href="{{ route('create_exponse', $category) }}"
                                            class="btn-primary btn-sm">
                                             + Dépense
                                         </a>
                                         @if($isOwner)
-                                            <form method="POST"
-                                                  action=""
+                                            <form method="POST" action=""
                                                   onsubmit="return confirm('Supprimer cette catégorie et ses dépenses ?')">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn-link danger btn-sm">Supprimer</button>
@@ -140,16 +173,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($category->expenses as $expense)
+                                            @foreach($category->exponses as $expense)
                                                 <tr>
                                                     <td>{{ $expense->title }}</td>
                                                     <td>{{ $expense->payer->name }}</td>
-                                                    <td>{{ $expense->date->format('d/m/Y') }}</td>
+                                                    <td>{{ $expense->date }}</td>
                                                     <td><strong>{{ number_format($expense->amount, 2, ',', ' ') }} €</strong></td>
                                                     <td>
                                                         @if($isOwner || $expense->payer_id === auth()->id())
-                                                            <form method="POST"
-                                                                  action="{{ route('colocation.expenses.destroy', [$colocation, $expense]) }}"
+                                                            <form method="POST" action=""
                                                                   onsubmit="return confirm('Supprimer cette dépense ?')">
                                                                 @csrf @method('DELETE')
                                                                 <button type="submit" class="btn-link danger">Supprimer</button>
@@ -163,7 +195,7 @@
                                             <tr>
                                                 <td colspan="3" class="tfoot-label">Total</td>
                                                 <td colspan="2" class="tfoot-total">
-                                                    {{ number_format($category->expenses->sum('amount'), 2, ',', ' ') }} €
+                                                    {{ number_format($category->exponses->sum('amount'), 2, ',', ' ') }} €
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -175,9 +207,9 @@
                     </div>
                 @endif
 
-            </div>
+            </div>{{-- /show-main --}}
 
-        </div>
+        </div>{{-- /show-layout --}}
 
     </div>
 </main>

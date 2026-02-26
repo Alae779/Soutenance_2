@@ -25,10 +25,11 @@ class InvitationController extends Controller
             'status' => 'pending',
             'expires_at' => now()->addDays(7),
         ]);
-        $invitation->load('colocation');
+        // $invitation->load('colocation');
         Mail::to($request->email)->send(new InvitationMail($invitation));
         return redirect('home');
     }
+    
     public function accept($token){
         $invitation = Invitation::where('token', $token)->firstOrFail();
         if ($invitation->email !== Auth::user()->email) {

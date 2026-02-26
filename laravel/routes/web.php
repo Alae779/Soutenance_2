@@ -3,11 +3,12 @@
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColocationController;
+use App\Http\Controllers\ExponseController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
-
+use App\Http\Controllers\SettlementController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,4 +38,12 @@ Route::post('/store/category/{colocation}', [CategoryController::class, 'store']
 Route::get('/invite/{colocation}', [InvitationController::class, 'invite'])->name('invite');
 Route::post('/send/invitation/{colocation}', [InvitationController::class, 'send'])->name('send_invitation');
 Route::get('/accept/invitation/{colocation}', [InvitationController::class, 'accept'])->name('accept_invitation');
+
+Route::get('/create/exponse/category/{category}', [ExponseController::class, 'create'])->name('create_exponse');
+Route::post('/store/exponse/{id}', [ExponseController::class, 'store'])->name('store_exponse');
+
+
+
+Route::post('/pay/{id}', [SettlementController::class, 'pay'])->name('mark_paid');
+
 

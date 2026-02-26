@@ -11,7 +11,7 @@ class ColocationController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        $colocations = Auth::user()->activeColocations()->get();
+        $colocations = $user->activeColocations()->get();
         return view('index', compact('colocations'));
     }
     public function create(){
@@ -30,7 +30,27 @@ class ColocationController extends Controller
     public function show($id){
         $colocation = Colocation::with('activeMembers', 'categories.exponses.payer')->find($id);
         $isOwner = $colocation->isOwner(Auth::user());
-        return view('colocation.show', compact('colocation', 'isOwner'));
+
+        $members = $colocation->activeMembers;
+        $memberCount = count($members);
+        $debts = [];
+
+        foreach($colocation->categories as $category){
+            foreach($category->exponses as $exponse){
+                $share = $exponse->amount / $memberCount;
+                foreach($members as $member){
+                    if($member->id === $exponse->payer_id) continue;
+                    $debts [] = [
+                        "from_id" => $member->id,
+                        "from" => $member->name,
+                        "to_id" => $exponse->payer_id,
+                        "to" => $members->find($exponse->payer_id)->name,
+                        "amount" => round($share, 2),
+                    ];
+                }
+            }
+        }
+        return view('colocation.show', compact('colocation', 'isOwner', 'debts'));
     }
     public function invite(Colocation $colocation){
         $colocation = Colocation::with('activeMembers', 'categories.exponses.payer')->find($colocation->id);
