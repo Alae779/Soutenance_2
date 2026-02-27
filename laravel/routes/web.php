@@ -8,6 +8,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettlementController;
 
 Route::get('/', function () {
@@ -30,10 +31,11 @@ Route::post('/store', [ColocationController::class, 'store'])->name('store_coloc
 //show invitation form
 Route::get('/invite/{colocation}', [InvitationController::class, 'invite'])->name('invite');
 Route::post('/cancel/{id}', [ColocationController::class, 'cancel'])->name('cancel');
-Route::get('/leave', [ColocationController::class, 'leave'])->name('leave');
+Route::post('/leave/{colocation}', [ProfileController::class, 'leave'])->name('leave');
 
 Route::get('/create/category/{colocation}', [CategoryController::class, 'create'])->name('create_category');
 Route::post('/store/category/{colocation}', [CategoryController::class, 'store'])->name('store_category');
+Route::delete('/delete/category/{id}', [CategoryController::class, 'delete'])->name('delete_category');
 
 Route::get('/invite/{colocation}', [InvitationController::class, 'invite'])->name('invite');
 Route::post('/send/invitation/{colocation}', [InvitationController::class, 'send'])->name('send_invitation');
@@ -41,6 +43,10 @@ Route::get('/accept/invitation/{colocation}', [InvitationController::class, 'acc
 
 Route::get('/create/exponse/category/{category}', [ExponseController::class, 'create'])->name('create_exponse');
 Route::post('/store/exponse/{id}', [ExponseController::class, 'store'])->name('store_exponse');
+Route::delete('/delete/expense/{id}', [ExponseController::class, 'delete'])->name('delete_exponse');
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile_edit');
+
 
 
 

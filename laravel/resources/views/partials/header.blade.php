@@ -25,6 +25,7 @@
 
         <div class="header-actions">
             <span class="header-username">Hey</span>
+            <a href="{{ route('profile_edit') }}" class="btn-ghost">Profil</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="btn-ghost">Déconnexion</button>

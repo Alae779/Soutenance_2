@@ -24,4 +24,7 @@ class ExponseController extends Controller
         ]);
         return redirect('/');
     }
+    public function delete($id){
+        Exponse::destroy($id);
+    }
 }

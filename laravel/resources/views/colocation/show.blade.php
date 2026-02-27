@@ -153,7 +153,7 @@
                                             + Dépense
                                         </a>
                                         @if($isOwner)
-                                            <form method="POST" action=""
+                                            <form method="POST" action="{{ route('delete_category', $category->id) }}"
                                                   onsubmit="return confirm('Supprimer cette catégorie et ses dépenses ?')">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn-link danger btn-sm">Supprimer</button>
@@ -184,7 +184,7 @@
                                                     <td><strong>{{ number_format($expense->amount, 2, ',', ' ') }} €</strong></td>
                                                     <td>
                                                         @if($isOwner || $expense->payer_id === auth()->id())
-                                                            <form method="POST" action=""
+                                                            <form method="POST" action="{{ route('delete_exponse', $expense->id) }}"
                                                                   onsubmit="return confirm('Supprimer cette dépense ?')">
                                                                 @csrf @method('DELETE')
                                                                 <button type="submit" class="btn-link danger">Supprimer</button>

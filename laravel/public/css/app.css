@@ -1656,7 +1656,14 @@ ul { list-style: none; }
     transition: background .15s;
 }
 .btn-mark-paid:hover { background: #166534; color: white; }
-
+.reputation-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+.reputation-score.positive { color: #166534; }
+.reputation-score.negative { color: var(--red); }
 /* ============================================
    RESPONSIVE
    ============================================ */
